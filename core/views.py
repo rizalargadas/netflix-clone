@@ -1,8 +1,7 @@
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import EmailForm, CustomUserCreationForm
+from .forms import EmailForm, CustomUserCreationForm, CustomAuthenticationForm
 
 
 def index(request):
@@ -23,7 +22,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('core:success')
+            return redirect('movie_tv:browse')
     else:
         form = CustomUserCreationForm(initial={'email': email})
     return render(request, 'core/signup.html', {'form': form})
@@ -32,18 +31,19 @@ def signup(request):
 def success(request):
     return render(request, 'core/success.html')
 
-# def signin(request):
-#     if request.method == 'POST':
-#         print(request.POST)
-#         form = CustomAuthenticationForm(request, data=request.POST)
-#         if form.is_valid():
-#             email = form.cleaned_data['email']
-#             password = form.cleaned_data['password']
-#             user = authenticate(request, email=email, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('movie_tv: browse')
-#     else:
-#         print('not a POST request')
-#         form = CustomAuthenticationForm()
-#     return render(request, 'core/signin.html', {'form': form})
+
+def signin(request):
+    if request.method == "POST":
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+
+            if user:
+                login(request, user)
+                return redirect('movie_tv:browse')
+    else:
+        form = CustomAuthenticationForm()
+
+    return render(request, 'core/signin.html', {'form': form})

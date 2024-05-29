@@ -11,20 +11,20 @@
 		</nav>
 
 		<div class="h-full flex flex-col justify-center">
-            <div class="bg-black/50 p-16 rounded-lg w-fit mx-auto text-white">
+            <div class="bg-black/50 p-20 rounded-lg w-[560px] mx-auto text-white">
                 <h1 class="text-5xl font-bold text-white">Sign In</h1>
-                <form method="POST">
+                <form method="POST" class="mt-6">
                     {% csrf_token %}
-                    <div class="mt-10">{{ form.email }}</div>
-                    {% if form.email.errors %}
+                    {{ form.username }}
+                    {% if form.username.errors %}
                         <div class="text-red-500 text-sm my-2">
-                            {% for error in form.email.errors %}
+                            {% for error in form.username.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
         
-                    <div class="mt-4">{{ form.password }}</div>
+                    {{ form.password }}
                     {% if form.password.errors %}
                         <div class="text-red-500 text-sm my-2">
                             {% for error in form.password.errors %}
