@@ -22,7 +22,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('movie_tv:browse')
+            return redirect('profiles:choose_profile')
     else:
         form = CustomUserCreationForm(initial={'email': email})
     return render(request, 'core/signup.html', {'form': form})
@@ -42,7 +42,7 @@ def signin(request):
 
             if user:
                 login(request, user)
-                return redirect('movie_tv:browse')
+                return redirect('profiles:choose_profile')
     else:
         form = CustomAuthenticationForm()
 
