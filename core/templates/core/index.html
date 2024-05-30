@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Netflix{% endblock title %}
 {% block content %}
-<section id="hero" class="h-[80vh]" style="background-image: url('{% static 'core/images/netflix-hero-image.jpg' %}');">
+<section id="hero" class="h-[80vh]" style="background-image: url({% static 'core/images/netflix-hero-image.jpg' %}); background-repeat: no-repeat; background-size: cover;">
 	<div class="h-full w-full bg-black/80">
 		<nav class="w-[60%] flex justify-between mx-auto py-4">
 			<a href="{% url 'core:index' %}"><img src="{% static 'core/images/netflix-logo.png' %}" alt="Netflix Logo" width="160"></a>
