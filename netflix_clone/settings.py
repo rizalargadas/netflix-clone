@@ -125,6 +125,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -132,6 +135,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.CustomUser'
 
-LOGIN_URL = '/signin'
+LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/browse'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/signin'

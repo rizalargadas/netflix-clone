@@ -47,3 +47,8 @@ def signin(request):
         form = CustomAuthenticationForm()
 
     return render(request, 'core/signin.html', {'form': form})
+
+
+def signout(request):
+    logout(request)
+    return redirect('core:index')
