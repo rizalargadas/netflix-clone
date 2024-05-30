@@ -81,7 +81,7 @@ def profile_lock(request, pk):
     if request.method == 'POST':
         entered_pin = request.POST.get('pin', '')
         if entered_pin == profile.pin:
-            return redirect('movie_tv:browse')
+            return redirect(reverse('movie_tv:browse', args=[pk]))
         else:
             error = 'Wrong pin.'
             return render(request, 'profiles/profile_lock.html', {'error': error})
@@ -94,4 +94,4 @@ def check_profile_lock(request, pk):
     if profile.pin:
         return redirect(reverse('profiles:profile_lock', args=[pk]))
     else:
-        return redirect('movie_tv:browse')
+        return redirect(reverse('movie_tv:browse', args=[pk]))

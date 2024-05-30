@@ -4,6 +4,6 @@ from profiles.models import Profile
 from django.urls import reverse
 
 
-@login_required
-def browse(request):
-    return render(request, 'movie_tv/browse.html')
+def browse(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    return render(request, 'movie_tv/browse.html', {'profile': profile})

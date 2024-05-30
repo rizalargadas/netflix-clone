@@ -5,6 +5,8 @@ from .forms import EmailForm, CustomUserCreationForm, CustomAuthenticationForm
 
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('profiles:choose_profile')
     if request.method == 'POST':
         form = EmailForm(request.POST)
         if form.is_valid():
@@ -51,4 +53,4 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    return redirect('core:index')
+    return redirect('core:signin')
