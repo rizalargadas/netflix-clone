@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from .forms import ProfileForm
-from .models import ProfileImage, Profile
+from .models import Profile
 
 
 @login_required
@@ -73,3 +74,24 @@ def delete_profile(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
     profile.delete()
     return redirect('profiles:manage_profiles')
+
+
+def profile_lock(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if request.method == 'POST':
+        entered_pin = request.POST.get('pin', '')
+        if entered_pin == profile.pin:
+            return redirect('movie_tv:browse')
+        else:
+            error = 'Wrong pin.'
+            return render(request, 'profiles/profile_lock.html', {'error': error})
+
+    return render(request, 'profiles/profile_lock.html')
+
+
+def check_profile_lock(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if profile.pin:
+        return redirect(reverse('profiles:profile_lock', args=[pk]))
+    else:
+        return redirect('movie_tv:browse')
