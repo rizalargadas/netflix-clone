@@ -1,16 +1,9 @@
+{% extends "movie_tv/base.html" %}
 {% load static %}
-{% load static tailwind_tags %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% tailwind_css %}
-</head>
-<body class="bg-[#151514]">
-    <nav class='h-fit py-6 bg-gradient-to-b from-[#060606] to-[#131213]'>
-        <div class="max-w-[90%] mx-auto flex justify-between items-center">
+
+{% block content %}
+    <nav id="nav" class='h-24 bg-gradient-to-b from-[#060606] to-[#131213]'>
+        <div class="max-w-[90%] mx-auto flex justify-between h-full align-middle items-center" @click="hideSearchInput">
             <div class='flex gap-14 text-white items-center'>
                 <img src="{% static 'core/images/netflix-logo.png' %}" width="100px">
                 <div class='flex gap-6'>
@@ -19,26 +12,27 @@
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Movies</a>
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>New & Popular</a>
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>My List</a>
+                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Browse by Languages</a>
                 </div>
             </div>
 
             <div class="flex items-center text-white gap-6">
-                <div class="relative">
+                <div class="relative" :class="searchInputVisibility">
                     <input type="text" class="bg-black w-[300px] border border-white placeholder:text-lg pl-10 focus:ring-0 focus:border-white" placeholder="Titles, people, genres">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 absolute top-2 left-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>  
                 </div>      
                 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 cursor-pointer" @click.stop="showSearchInput" :class="searchIconVisibility">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
-                  
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 cursor-pointer">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                 </svg>
                 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 cursor-pointer">
                     <img src="{{ profile.avatar.image.url }}" alt="" width="40px" class="rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -47,5 +41,86 @@
             </div>
         </div>
     </nav>
-</body>
-</html>
+
+    <section id="hero" class="h-hero-height" style="background-image: url({{ featured_movie.cover.url }}); background-repeat: no-repeat; background-size: cover;">
+        <div class="h-full bg-[#131213]/50">
+            <div class="px-24 pb-24 w-[40%] h-full flex flex-col justify-end">
+                <h1 class="text-white text-7xl leading-tight font-semibold"> {{ featured_movie.title }} </h1>
+                <p class="text-white text-lg mt-6"> {{ featured_movie.description }} </p>
+                <div class="flex gap-4">
+                    <a href="{% url 'movie_tv:watch' featured_movie.id %}">
+                        <button class="mt-8 flex items-center bg-white rounded py-4 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                        </svg>
+                        <p>Play</p>                         
+                        </button>
+                    </a>
+
+                    <button class="mt-8 flex items-center bg-[#64635F] rounded py-4 px-6 text-white text-2xl font-semibold gap-2 shadow-lg hover:bg-stone-600" @click="showPopup">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                        </svg>                         
+                        <p>More Info</p>                         
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-screen flex flex-col justify-center bg-black/80 absolute top-0" v-if="isPopupVisible" @click="hidePopup">
+            <div class="w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
+                <div class="relative">
+                    <img src="{% static 'movie_tv/images/black-clover.png'%}" alt="" class="w-full rounded-xl">
+                    <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">
+                        <span class="text-white text-3xl font-medium">{{ featured_movie.title }}</span>
+                        <a href="{% url 'movie_tv:watch' featured_movie.id %}">
+                            <button class="mt-2 flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                </svg>
+                                <p>Play</p>                         
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-6 px-10 w-full flex justify-between">
+                    <div class="max-w-[65%]">
+                        <p class="text-white text-lg">{{ featured_movie.description }}</p>
+                    </div>
+                    <div class="max-w-[30%]">
+                        <p class="text-white">
+                            <span class="text-gray-400">Cast:</span>
+                            {% for actor in featured_movie.cast.all %}
+                                {{actor}}, 
+                            {% endfor %}
+                            <span class="italic">more</span>
+                        </p>
+
+                        <p class="mt-4 text-white">
+                            <span class="text-gray-400">Genres:</span>
+                            {% for genre in featured_movie.genre.all %}
+                                {{genre}}, 
+                            {% endfor %}.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% comment %} <div class="bg-[#131213]/80 w-[250px] h-[500px] absolute top-24 right-12">
+
+    </div> {% endcomment %}
+
+    <section class="mt-12 mb-16 px-24">
+        <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You</p>
+        <div class="mt-6 flex flex-wrap gap-4">
+            {% for movie in movies %}
+                <a href="{% url 'movie_tv:watch' movie.id %}"><img src="{{ movie.cover.url }}" alt="{{ movie.title }} cover" width="350px" class="rounded"></a>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <script src="{% static 'movie_tv/js/browse.js' %}"></script>
+{% endblock content %}

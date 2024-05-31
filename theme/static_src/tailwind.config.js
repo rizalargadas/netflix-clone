@@ -43,9 +43,9 @@ module.exports = {
     ],
     theme: {
         extend: {
-            backgroundImage :{
-                'hero-background': "url('core/static/core/images/netflix-hero-image.jpg')"
-            }
+            height: {
+                'hero-height': 'calc(100vh - 6rem)',
+              },
         },
     },
     plugins: [
