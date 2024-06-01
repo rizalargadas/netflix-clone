@@ -7,10 +7,12 @@ from django.urls import reverse
 
 def browse(request, pk):
     profile = get_object_or_404(Profile, pk=pk)
+    profiles = Profile.objects.filter(account=profile.account)
     movies = Movie.objects.all()
     featured_movie = movies.get(is_featured=True)
     context = {
         'profile': profile,
+        'profiles': profiles,
         'movies': movies,
         'featured_movie': featured_movie,
     }
