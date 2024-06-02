@@ -1,0 +1,55 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Profile</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-[#141414]">
+    <form method="POST" class="w-[40%] h-screen flex flex-col justify-center mx-auto">
+        {% csrf_token %}
+        <h1 class="text-7xl text-white font-bold">Edit Profile</h1>     
+        {% if error %}
+        <p class="mt-6 mb-4 text-xl text-red-500"> ⚠️ {{ error }} ⚠️</p>
+        {% endif %}   
+        <hr class="border border-[#818081] my-8">
+        <div class="flex justify-between gap-10">
+            <div>
+                <img src="{{ profile.avatar.image.url }}" alt="{{ profile.name }} profile avatar" class="rounded-xl w-[220px]">
+            </div>
+            
+            <div class="w-full">
+                {{ form.name }}
+                
+                <div>
+                    <p class="mt-6 mb-4 text-xl font-medium text-white">Enter/Edit Pin (optional)</p>
+                    <div class="flex gap-2">
+                        {{ form.enter_pin }}
+                        {{ form.confirm_pin }}
+                    </div>
+                </div>
+
+                <p class="mt-6 mb-4 text-xl font-medium text-white">Change Avatar:</p>
+                {{ form.avatar }}
+
+                <div class="flex items-center gap-4 mt-6">
+                    {{ form.is_kid}}
+                    <p class="text-2xl text-white">Kid?</p>
+                </div>
+            </div>
+            
+        </div>
+        <hr class="border border-[#818081] my-8">
+        <a href="{% url 'profiles:delete_profile' profile.id %}" class="text-xl text-red-500">Delete Profile</a>
+        <div class="flex gap-4">
+            <button type="submit" class="mt-8 py-3 px-8 bg-white w-fit text-black font-semibold text-2xl hover:bg-red-600 hover:text-white">Save</button>
+            <a href="{% url 'profiles:manage_profiles' %}" class="mt-8 py-3 px-10 border-2 border-gray-200 w-fit text-gray-400 font-semibold text-2xl hover:border-white hover:text-white">
+                Cancel
+            </a>
+        </div>
+    </form>
+</body>
+</html>

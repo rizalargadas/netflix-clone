@@ -1,0 +1,36 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-[#151415]">
+    <div class="h-screen w-[60%] flex flex-col justify-center mx-auto">
+        <h1 class="text-7xl text-white text-center">Manage Profiles</h1>
+        <div class="mt-16 flex gap-4 w-full justify-center items-center">
+            {% for profile in profiles %}
+            <a href="{% url 'profiles:edit_profile' profile.id %}">
+                <div class="rounded-xl w-[220px] relative hover:border-4 hover:border-white cursor-pointer">
+                    <img src="{{ profile.avatar.image.url }}" alt="{{ profile.name }} profile avatar" class="opacity-40 w-full rounded-xl">  
+                    <img src="{% static 'profiles/images/pen.png'%}" alt="edit icon" class="w-full rounded-xl absolute top-0 left-0">  
+                </div>              
+                <p class="mt-4 text-[#818081] text-2xl text-center hover:text-white cursor-pointer">{{ profile.name }}</p>
+            </a>
+            {% endfor %}
+
+            <div>
+                <a href="{% url 'profiles:add_profile' %}">
+                    <img src="{% static 'profiles/images/add-profile.png'%}" alt="Add Profile Icon" class="rounded-xl w-[220px] hover:border-4 hover:border-white cursor-pointer">
+                    <p class="mt-4 text-[#818081] text-2xl text-center hover:text-white cursor-pointer">Add Profile</p>
+                </a>               
+            </div>
+        </div>
+        <a href="{% url 'profiles:choose_profile' %}" class="mt-16 py-3 px-8 bg-white w-fit text-black font-semibold text-2xl mx-auto hover:bg-red-600 hover:text-white">Done</a>
+    </div>
+    
+</body>
+</html>

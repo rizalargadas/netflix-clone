@@ -1,0 +1,37 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Profile</title>
+    {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+    {% tailwind_css %}
+</head>
+<body class="bg-black">
+    <form method="POST" class="w-[40%] h-screen flex flex-col justify-center mx-auto">
+        {% csrf_token %}
+        <h1 class="text-7xl text-white">Add Profile</h1>
+        <p class="text-2xl my-8 text-[#818081]">Add a profile for another person watching Netflix.</p>
+        
+        <hr class="border border-[#818081] mb-8">
+        <div class="flex justify-between items-center gap-6">
+            <img src="{% static 'profiles/images/default_profile.png'%}" alt="default profile image" class="rounded-xl w-[220px]">
+            {{ form.name }}
+            <div class="flex items-center gap-4">
+                {{ form.is_kid}}
+                {% comment %} <input type="text" class="h-fit py-2 w-12 border border-[#818081] bg-transparent placeholder-white text-xl"> {% endcomment %}
+                <p class="text-2xl text-white">Kid?</p>
+            </div>
+        </div>
+        <hr class="border border-[#818081] my-8">
+        <div class="flex gap-4">
+            <button type="submit" class="mt-8 py-3 px-10 bg-gray-400 w-fit text-black font-semibold text-2xl hover:bg-white">Continue</button>
+            <a href="{% url 'profiles:choose_profile' %}" class="mt-8 py-3 px-10 border-2 border-gray-200 w-fit text-gray-400 font-semibold text-2xl hover:border-white hover:text-white">
+                Cancel
+            </a>
+        </div>
+    </form>
+</body>
+</html>
