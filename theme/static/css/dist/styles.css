@@ -1950,6 +1950,14 @@ select {
   top: 100px;
 }
 
+.right-0 {
+  right: 0px;
+}
+
+.top-24 {
+  top: 6rem;
+}
+
 .isolate {
   isolation: isolate;
 }
@@ -2004,6 +2012,10 @@ select {
 
 .clear-none {
   clear: none;
+}
+
+.m-0 {
+  margin: 0px;
 }
 
 .mx-2 {
@@ -3600,6 +3612,10 @@ select {
 
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-10 {

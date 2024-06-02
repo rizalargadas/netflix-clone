@@ -6,6 +6,7 @@ const hero = Vue.createApp({
             isMiniPopupVisible : {},
             message: 'you reached me',
             hoverTimeout: null,
+            isMovieDetailVisible: {}
         }
     },
     methods: {
@@ -16,11 +17,24 @@ const hero = Vue.createApp({
         hidePopup() {
             this.isPopupVisible = false
         },
+        hideMovieDetail(movieId) {
+            console.log('You clicked hidemoviedetail')
+            if (this.isMovieDetailVisible[movieId]) {
+                delete this.isMovieDetailVisible[movieId];
+            }
+        },
+        showMovieDetail(movieId) {
+            console.log(`You clicked showmoviedetail, movie: ${movieId}`)
+            this.isMovieDetailVisible = {}
+            this.isMovieDetailVisible[movieId] = true
+        },
         showMiniPopup(movieId) {
             console.log(`You hover and show mini popup, movie ${movieId}`)
-            // event.stopPropagation()
             this.isMiniPopupVisible = {};
             this.isMiniPopupVisible[movieId] = true
+        },
+        handleMovieClick(movieId) {
+            console.log(`You hover and show mini popup, movie ${movieId}`)
         },
         hideMiniPopup(movieId) {
             console.log('You hover OUT and HIDE mini popup')
@@ -29,6 +43,7 @@ const hero = Vue.createApp({
             }
         },
         handleMouseOver(movieId) {
+            console.log(`You hover and show mini popup, movie ${movieId}`)
             this.hoverTimeout= setTimeout(() => {
                 this.showMiniPopup(movieId)
             }, 500)

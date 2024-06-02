@@ -110,25 +110,43 @@
             </div>
         </div>
 
-        <div class="h-full flex flex-col justify-center bg-black/80 absolute top-0 " v-if="isPopupVisible" @click="hidePopup">
+        <div id="featured-movie-detail-popup" class="h-full flex flex-col justify-center bg-black/80 absolute top-0 " v-if="isPopupVisible" @click="hidePopup">
             <div class="w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
                 <div class="relative">
-                    <img src="{% static 'movie_tv/images/black-clover.png'%}" alt="" class="w-full rounded-xl">
+                    <img src="{{ featured_movie.cover.url }}" alt="" class="w-full rounded-xl">
                     <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">
                         <span class="text-white text-3xl font-medium">{{ featured_movie.title }}</span>
                         <a href="{% url 'movie_tv:watch' featured_movie.id %}">
-                            <button class="mt-2 flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-                                </svg>
-                                <p>Play</p>                         
-                            </button>
+                            <div class="flex gap-4 items-center mt-4">
+                                <button class="flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                    </svg>
+                                    <p>Play</p>                         
+                                </button>
+                                {% comment %} Add to List button circle {% endcomment %}
+                                <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>                                                                                 
+                                </div>
+                                {% comment %} Like button circle {% endcomment %}
+                                <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                                    </svg>                                                                                                                                                               
+                                </div>
+                            </div>
                         </a>
                     </div>
                 </div>
                 <div class="mt-6 px-10 w-full flex justify-between">
                     <div class="max-w-[65%]">
-                        <p class="text-white text-lg">{{ featured_movie.description }}</p>
+                        <div class="flex gap-2 items-baseline">
+                            <p class="text-green-500">83% Ratings</p>
+                            <p class="border-2  border-gray-500 text-white">13+</p>
+                        </div>
+                        <p class="mt-2 text-white text-lg">{{ featured_movie.description }}</p>
                     </div>
                     <div class="max-w-[30%]">
                         <p class="text-white">
@@ -142,21 +160,24 @@
                         <p class="mt-4 text-white">
                             <span class="text-gray-400">Genres:</span>
                             {% for genre in featured_movie.genre.all %}
-                                {{genre}}, 
-                            {% endfor %}.
+                                {{genre}}
+                                {% if not forloop.last %}<span class="text-gray-400 text-2xl">, </span>{% endif %}
+                            {% endfor %}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
     <section class="mt-12 mb-16 px-24">
         <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You [[message]] </p>
         <div class="mt-6 flex flex-wrap gap-4">
             {% for movie in movies %}
-                <div class="" >
+                <div id="individual-movie">
                     <a @mouseenter="handleMouseOver('{{movie.id}}')" href="{% url 'movie_tv:watch' movie.id %}"><img src="{{ movie.cover.url }}" alt="{{ movie.title }} cover" width="350px" class="rounded"></a>
+                    {% comment %} Hover mini popup {% endcomment %}
                     <div @mouseleave="handleMouseOut('{{movie.id}}')" v-show="isMiniPopupVisible['{{movie.id}}']" class="absolute -mt-64 -ml-14 h-fit flex flex-col justify-center shadow-md">
                         <div class="w-[450px] mx-auto rounded-xl bg-[#191819] pb-10">
                             <div class="relative">
@@ -166,21 +187,42 @@
                                 </div>
                             </div>
                             <div class="mt-4 px-6 w-full" >
-                                <div class="flex gap-4">
-                                    <div class="w-fit p-1 rounded-full bg-white hover:bg-gray-300">
-                                        <a href="{% url 'movie_tv:watch' movie.id %}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-                                            </svg> 
-                                        </a>                                         
-                                    </div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex gap-4">
+                                        <div class="w-fit p-1 rounded-full bg-white hover:bg-gray-300">
+                                            <a href="{% url 'movie_tv:watch' movie.id %}">
+                                                {% comment %} Play Button Circle {% endcomment %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                                </svg> 
+                                            </a>                                         
+                                        </div>
+        
+                                        <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                            {% comment %} Add to List Button Circle {% endcomment %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>                                                                                 
+                                        </div>
     
-                                    <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                        </svg>                                                                                 
+                                        <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                            {% comment %} Like Button Circle {% endcomment %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                                            </svg>
+                                                                                                                                                                       
+                                        </div>
+                                            
                                     </div>
-                                        
+
+                                    <div>
+                                        <div @click="showMovieDetail('{{movie.id}}')" class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                            {% comment %} Show more detail Button Circle {% endcomment %}
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                            </svg>                                                                    
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="mt-6 flex gap-2 items-baseline">
                                     <p class="text-green-500">83% Ratings</p>
@@ -196,6 +238,68 @@
                             </div>
                         </div>
                     </div>
+
+                    {% comment %} Movie detail popup {% endcomment %}
+                    <div id="movie-detail-popup" class="h-full w-full p-0 m-0 flex flex-col justify-center bg-black/80 absolute top-24 right-0 left-0" v-show="isMovieDetailVisible['{{ movie.id }}']" @click="hideMovieDetail('{{movie.id}}')">
+                        <div class="w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
+                            <div class="relative">
+                                <img src="{{ movie.cover.url }}" alt="" class="w-full rounded-xl">
+                                <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">
+                                    <span class="text-white text-3xl font-medium">{{ movie.title }}</span>
+                                    <a href="{% url 'movie_tv:watch' movie.id %}">
+                                        <div class="flex gap-4 items-center mt-4">
+                                            {% comment %} Play button {% endcomment %}
+                                            <button class="flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                                </svg>
+                                                <p>Play</p>                         
+                                            </button>
+                                            {% comment %} Add to List button {% endcomment %}
+                                            <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>                                                                                 
+                                            </div>
+                                            {% comment %} Like Button {% endcomment %}
+                                            <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                                                </svg>                                                                                                                          
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-6 px-10 w-full flex justify-between">
+                                <div class="max-w-[65%]">
+                                    <div class="flex gap-2 items-baseline">
+                                        <p class="text-green-500">83% Ratings</p>
+                                        <p class="border-2  border-gray-500 text-white">13+</p>
+                                    </div>
+                                    <p class="mt-2 text-white text-lg">{{ movie.description }}</p>
+                                </div>
+                                <div class="max-w-[30%]">
+                                    <p class="text-white">
+                                        <span class="text-gray-400">Cast:</span>
+                                        {% for actor in movie.cast.all %}
+                                            {{actor}}, 
+                                        {% endfor %}
+                                        <span class="italic">more</span>
+                                    </p>
+            
+                                    <p class="mt-4 text-white">
+                                        <span class="text-gray-400">Genres:</span>
+                                        {% for genre in movie.genre.all %}
+                                            {{genre}}
+                                            {% if not forloop.last %}<span class="text-gray-400 text-2xl">, </span>{% endif %}
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 
