@@ -1930,6 +1930,10 @@ select {
   left: 1.5rem;
 }
 
+.right-24 {
+  right: 6rem;
+}
+
 .start-1 {
   inset-inline-start: 0.25rem;
 }
@@ -1940,14 +1944,6 @@ select {
 
 .top-2 {
   top: 0.5rem;
-}
-
-.right-24 {
-  right: 6rem;
-}
-
-.top-24 {
-  top: 6rem;
 }
 
 .top-\[100px\] {
