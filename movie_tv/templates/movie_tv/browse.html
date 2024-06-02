@@ -171,7 +171,7 @@
 
     </section>
 
-    <section class="mt-12 mb-16 px-24">
+    <section class="mt-12 mb-16 px-24 relative">
         <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You [[message]] </p>
         <div class="mt-6 flex flex-wrap gap-4">
             {% for movie in movies %}
@@ -240,7 +240,7 @@
                     </div>
 
                     {% comment %} Movie detail popup {% endcomment %}
-                    <div id="movie-detail-popup" class="h-full w-full p-0 m-0 flex flex-col justify-center bg-black/80 absolute top-24 right-0 left-0" v-show="isMovieDetailVisible['{{ movie.id }}']" @click="hideMovieDetail('{{movie.id}}')">
+                    <div id="movie-detail-popup" class="h-full w-full p-0 m-0 flex flex-col justify-center bg-black/80 fixed top-0 right-0 left-0" v-show="isMovieDetailVisible['{{ movie.id }}']" @click="hideMovieDetail('{{movie.id}}')">
                         <div class="w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
                             <div class="relative">
                                 <img src="{{ movie.cover.url }}" alt="" class="w-full rounded-xl">
