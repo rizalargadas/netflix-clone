@@ -8,9 +8,9 @@
                 <img src="{% static 'core/images/netflix-logo.png' %}" width="100px">
                 <div class='flex gap-6'>
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Home</a>
-                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>TV Shows</a>
-                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Movies</a>
-                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>New & Popular</a>
+                    <a href="{% url 'movie_tv:tv_show' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>TV Shows</a>
+                    <a href="{% url 'movie_tv:movies' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>Movies</a>
+                    <a href="{% url 'movie_tv:new_popular' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>New & Popular</a>
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>My List</a>
                     <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Browse by Languages</a>
                 </div>
@@ -175,7 +175,7 @@
     </section>
 
     <section class="mt-12 mb-16 px-24 relative">
-        <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You [[message]] </p>
+        <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You</p>
         <div class="mt-6 flex flex-wrap gap-4">
             {% for movie in movies %}
                 <div id="individual-movie">
