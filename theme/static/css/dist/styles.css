@@ -1930,6 +1930,10 @@ select {
   left: 1.5rem;
 }
 
+.right-0 {
+  right: 0px;
+}
+
 .right-24 {
   right: 6rem;
 }
@@ -1948,14 +1952,6 @@ select {
 
 .top-\[100px\] {
   top: 100px;
-}
-
-.right-0 {
-  right: 0px;
-}
-
-.top-24 {
-  top: 6rem;
 }
 
 .isolate {
@@ -2266,6 +2262,14 @@ select {
   height: 100vh;
 }
 
+.h-6 {
+  height: 1.5rem;
+}
+
+.h-8 {
+  height: 2rem;
+}
+
 .w-1\/4 {
   width: 25%;
 }
@@ -2329,6 +2333,14 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .max-w-\[30\%\] {
@@ -3602,6 +3614,10 @@ select {
      object-fit: scale-down;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -3612,10 +3628,6 @@ select {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-0 {
-  padding: 0px;
 }
 
 .px-10 {
@@ -3940,6 +3952,11 @@ select {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -6357,6 +6374,11 @@ select {
 }
 
 @media (prefers-color-scheme: dark) {
+  .dark\:text-white {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+
   @media (min-width: 1024px) {
     .dark\:lg\:hover\:\[paint-order\:markers\]:hover {
       paint-order: markers;

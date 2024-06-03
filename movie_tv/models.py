@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from profiles.models import Profile
 
 SHOW_TYPE_CHOICES = (
     ('movie', 'Movie'),
@@ -59,8 +60,25 @@ class Movie(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE, null=True)
     is_featured = models.BooleanField(default=False)
 
+    def vote_count(self):
+        return self.votes.count()
+
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['-date_added']
+
+
+class Vote(models.Model):
+    movie = models.ForeignKey(
+        Movie, on_delete=models.CASCADE, related_name="votes")
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="votes")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['movie', 'profile']
+
+    def __str__(self):
+        return f"{self.profile} - {self.movie}"
