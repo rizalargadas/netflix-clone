@@ -6,7 +6,7 @@ from .models import CustomUser
 class EmailForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'Email',
-        'class': 'mt-2 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-2 bg-black/50 w-full lg:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
 
 

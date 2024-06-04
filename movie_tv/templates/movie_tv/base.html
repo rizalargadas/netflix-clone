@@ -10,15 +10,17 @@
     {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
     {% tailwind_css %}
 </head>
-<body class="bg-[#151514]">
-
-    {% block content %}
+<body class="bg-[#151514] min-h-screen flex flex-col">
+    <div class="flex-grow">
+        {% block content %}
     
-    {% endblock content %}
+        {% endblock content %}
+    </div>
+    
     {% comment %} Importing and Mounting Vue App {% endcomment %}
     
     
-    <footer class="mt-2 bg-black text-white text-center p-5">
+    <footer class="bg-black text-white text-center p-5 mt-auto">
         <p>&copy; 2024 Riza Largadas. All Rights Reserved.</p>
         <p>This Netflix clone is created for portfolio purposes only and is not intended for commercial use.</p>
         <p>
