@@ -67,7 +67,7 @@ const nav = Vue.createApp({
             searchInputVisibility: 'hidden',
             searchIconVisibility: '',
             isAccountNavVisible: false,
-            text:'you reached meeee'
+            mobileNavVisibility: false
         }
     },
     methods: {
@@ -91,6 +91,9 @@ const nav = Vue.createApp({
         },
         handleAccountClick() {
             this.isAccountNavVisible = !this.isAccountNavVisible
+        },
+        toggleMobileNav() {
+            this.mobileNavVisibility = !this.mobileNavVisibility
         }
     },
     delimiters: ['[[',']]']

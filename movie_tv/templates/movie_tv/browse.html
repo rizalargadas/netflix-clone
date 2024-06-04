@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <section id="nav" class="relative">
-    <nav class='h-24 bg-gradient-to-b from-[#060606] to-[#131213]'>
+    <nav class='hidden md:block h-24 bg-gradient-to-b from-[#060606] to-[#131213]'>
         <div class="max-w-[90%] mx-auto flex justify-between h-full align-middle items-center" @click="hideSearchInput">
             <div class='flex gap-14 text-white items-center'>
                 <img src="{% static 'core/images/netflix-logo.png' %}" width="100px">
@@ -18,7 +18,9 @@
     
             <div class="flex items-center text-white gap-6">
                 <div class="relative" :class="searchInputVisibility">
-                    <input type="text" class="bg-black w-[300px] border border-white placeholder:text-lg pl-10 focus:ring-0 focus:border-white" placeholder="Titles, people, genres">
+                    <form action="" method="GET">
+                        <input @click.stop type="text" name="q" value='{{request.GET.q}}' class="bg-black w-[300px] border border-white placeholder:text-lg pl-10 focus:ring-0 focus:border-white" placeholder="Titles, people, genres">
+                    </form>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 absolute top-2 left-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>  
@@ -78,10 +80,48 @@
             </div>
         </div>
     </section>
+
+    <section id="mobile-nav" class="md:hidden relative">
+        <div class="h-16 bg-black flex-col justify-center top-0 left-0 right-0 fixed z-50">
+            <div class="w-[90%] md:w-[60%] flex justify-between align-center mx-auto py-4">
+                <div class="text-white flex gap-2">
+                    {% comment %} Hamburger Icon {% endcomment %}
+                    <div @click="toggleMobileNav">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg> 
+                    </div>             
+                    <a href="{% url 'core:index' %}"><img src="{% static 'core/images/netflix-logo.png' %}" alt="Netflix Logo" class="w-[100px]"></a>
+                </div>
+                <input type="text" class="bg-black w-[200px] border border-white placeholder:text-sm md:placeholder:text-lg focus:ring-0 focus:border-white py-0 px-2 md:p-2 text-white" placeholder="Titles, people, genres">
+            </div> 
+        </div>
+    
+        <div v-show="mobileNavVisibility" class="bg-black w-[70%] p-4 fixed top-16 bottom-0 z-50 font-medium text-gray-300">
+            <div class="flex text-white gap-2">
+                <img src="{{ profile.avatar.image.url }}" class="w-[50px]">
+                <div>
+                    <p>{{profile.name}}</p>
+                    <a href="{% url 'profiles:manage_profiles' %}" class="text-sm font-normal">Switch Profiles</a>
+                </div>
+            </div>
+            <a href="{% url 'core:signout'%}" class="my-4 block">Sign out of Netflix</a>
+            <hr class="p-0 m-0 border border-gray-400">
+            <div class='mt-4 flex-col'>
+                <a href="{% url 'movie_tv:browse' profile.id %}" class='mt-4 block'>Home</a>
+                <a href="{% url 'movie_tv:tv_show' profile.id %}" class='mt-4 block'>TV Shows</a>
+                <a href="{% url 'movie_tv:movies' profile.id %}" class='mt-4 block'>Movies</a>
+                <a href="{% url 'movie_tv:new_popular' profile.id %}" class='mt-4 block'>New & Popular</a>
+                <a href="{% url 'movie_tv:my_list' profile.id %}" class='mt-4 block'>My List</a>
+                <a href="{% url 'movie_tv:browse_by_language' profile.id %}" class='mt-4 block'>Browse by Languages</a>
+            </div>
+        </div>
+    </section>
 </section>
 
+
 <section id="hero" >
-    <section class="h-hero-height relative" style="background-image: url({{ featured_movie.cover.url }}); background-repeat: no-repeat; background-size: cover;">
+    <section class="hidden md:block md:h-hero-height md:relative" style="background-image: url({{ featured_movie.cover.url }}); background-repeat: no-repeat; background-size: cover;">
         <div class="h-full bg-[#131213]/50">
             <div class="px-24 pb-24 w-[40%] h-full flex flex-col justify-end">
                 <h1 class="text-white text-7xl leading-tight font-semibold"> {{ featured_movie.title }} </h1>
@@ -173,12 +213,17 @@
 
     </section>
 
-    <section class="mt-12 mb-16 px-24 relative">
-        <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You</p>
+    <section class="mt-24 md:mt-12 mb-16 px-4 md:px-24 relative">
+        {% if message %}
+            <p class="text-white text-xl mt-6">{{ message }}</p>
+        {% else  %}
+            <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You</p>
+        {% endif %}
+        
         <div class="mt-6 flex flex-wrap gap-4">
             {% for movie in movies %}
                 <div id="individual-movie">
-                    <a @mouseenter="handleMouseOver('{{movie.id}}')" href="{% url 'movie_tv:watch' movie.id %}"><img src="{{ movie.cover.url }}" alt="{{ movie.title }} cover" width="350px" class="rounded"></a>
+                    <a @mouseenter="handleMouseOver('{{movie.id}}')" href="{% url 'movie_tv:watch' movie.id %}"><img src="{{ movie.cover.url }}" alt="{{ movie.title }} cover" class="rounded w-[165px] md:w-[350px]"></a>
                     {% comment %} Hover mini popup {% endcomment %}
                     <div @mouseleave="handleMouseOut('{{movie.id}}')" v-show="isMiniPopupVisible['{{movie.id}}']" class="absolute -mt-64 -ml-14 h-fit flex flex-col justify-center shadow-md">
                         <div class="w-[450px] mx-auto rounded-xl bg-[#191819] pb-10">
@@ -246,7 +291,7 @@
 
                     {% comment %} Movie detail popup {% endcomment %}
                     <div id="movie-detail-popup" class="h-full w-full p-0 m-0 flex flex-col justify-center bg-black/80 fixed top-0 right-0 left-0" v-show="isMovieDetailVisible['{{ movie.id }}']" @click="hideMovieDetail('{{movie.id}}')">
-                        <div class="w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
+                        <div class="w-[90%] md:w-[40%] mx-auto rounded-xl bg-[#191819] pb-10" @click.stop>
                             <div class="relative">
                                 <img src="{{ movie.cover.url }}" alt="" class="w-full rounded-xl">
                                 <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">

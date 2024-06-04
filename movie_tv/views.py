@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from profiles.models import Profile
 from django.urls import reverse
 from .models import Vote, Genre, Language, Movie, List
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Q
 from django.utils.timezone import make_aware
 from datetime import datetime, timedelta
 from django.http import HttpResponseRedirect
@@ -12,21 +12,31 @@ from django.http import HttpResponseRedirect
 def browse(request, profile_pk):
     profile = get_object_or_404(Profile, pk=profile_pk)
     profiles = Profile.objects.filter(account=profile.account)
-
+    query = request.GET.get('q', '')
+    message = ''
     movies = Movie.objects.annotate(
         has_voted=Exists(Vote.objects.filter(
             profile=profile, movie=OuterRef('pk'))),
         on_list=Exists(List.objects.filter(
             profile=profile, movie=OuterRef('pk')))
     )
-
     featured_movie = movies.get(is_featured=True, show_type='movie')
+
+    if query:
+        movies = movies.filter(
+            Q(title__icontains=query) |
+            Q(genre__name__icontains=query) |
+            Q(cast__name__icontains=query)
+        ).distinct()
+        if not movies:
+            message = f"No TV show or movie available for {query}."
 
     context = {
         'profile': profile,
         'profiles': profiles,
         'movies': movies,
         'featured_movie': featured_movie,
+        'message': message
     }
     return render(request, 'movie_tv/browse.html', context)
 
