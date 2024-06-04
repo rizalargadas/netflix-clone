@@ -3,15 +3,15 @@
 
 {% block title %}Sign Up{% endblock title %}
 {% block content %}
-<section id="hero" class="h-screen" style="background-image: url('{% static 'core/images/netflix-hero-image.jpg' %}');">
+<section id="hero" class="h-screen mb-2" style="background-image: url('{% static 'core/images/netflix-hero-image.jpg' %}');">
 	<div class="h-full w-full bg-black/80">
-		<nav class="w-[60%] flex justify-between mx-auto py-4">
-			<a href="{% url 'core:index' %}"><img src="{% static 'core/images/netflix-logo.png' %}" alt="Netflix Logo" width="160"></a>
+		<nav class="w-[90%] md:w-[60%] flex justify-between mx-auto py-4">
+			<a href="{% url 'core:index' %}"><img src="{% static 'core/images/netflix-logo.png' %}" alt="Netflix Logo" class="w-[120px] md:w-[160px]"></a>
 			<a href="{% url 'core:signin' %}"><button class="py-2 px-4 rounded bg-red-700 text-white font-semibold">Sign In</button></a>
 		</nav>
 
 		<div class="h-screen flex flex-col justify-center">
-            <div class="bg-black/50 p-20 rounded-lg w-[560px] mx-auto">
+            <div class="bg-black/50 p-6 md:p-20 rounded-lg w-[90%] md:w-[560px] mx-auto">
                 <h1 class="text-5xl font-bold text-white">Sign Up</h1>
                 <form action="." method="POST" class="text-white mt-8">
                     {% csrf_token %}
@@ -52,7 +52,7 @@
                         </div>
                     {% endif %}
         
-                    <button class="mt-8 py-4 px-4 w-[400px] rounded bg-red-700 text-white text-xl font-semibold">Sign Up</button>                 
+                    <button class="mt-8 py-4 px-4 w-full md:w-[400px] rounded bg-red-700 text-white text-xl font-semibold">Sign Up</button>                 
                 </form>
                 {% if form.non_field_errors %}
                     <div class="text-red-500 text-sm mt-4">

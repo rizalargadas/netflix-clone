@@ -10,9 +10,13 @@
 		{% tailwind_css %}
 		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 	</head>
-	<body class="bg-[#232222]">
-        {% block content %}{% endblock content %}
-		<footer class="mt-2 bg-black text-white text-center p-5">
+	<body class="bg-[#232222] min-h-screen flex flex-col">
+        <div class="flex-grow">
+			{% block content %}
+		
+			{% endblock content %}
+		</div>
+		<footer class=" bg-black text-white text-center p-5 mt-auto">
 			<p>&copy; 2024 Riza Largadas. All Rights Reserved.</p>
 			<p>This Netflix clone is created for portfolio purposes only and is not intended for commercial use.</p>
 			<p>

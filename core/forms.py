@@ -13,19 +13,19 @@ class EmailForm(forms.Form):
 class CustomUserCreationForm(UserCreationForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Full Name',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'Email',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Enter password.',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Confirm password.',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
 
     class Meta:
@@ -36,9 +36,9 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'Email',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Confirm password.',
-        'class': 'mt-4 bg-black/50 w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
+        'class': 'mt-4 bg-black/50 w-full md:w-[400px] px-4 py-4 border-2 border-gray-500 rounded-lg'
     }))
