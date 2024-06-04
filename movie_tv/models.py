@@ -82,3 +82,12 @@ class Vote(models.Model):
 
     def __str__(self):
         return f"{self.profile} - {self.movie}"
+
+
+class List(models.Model):
+    movie = models.ManyToManyField(Movie, related_name='lists')
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, related_name="list")
+
+    def __str__(self):
+        return f"{self.profile} List"

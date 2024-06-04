@@ -7,8 +7,8 @@
             <div class='flex gap-14 text-white items-center'>
                 <img src="{% static 'core/images/netflix-logo.png' %}" width="100px">
                 <div class='flex gap-6'>
-                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>Home</a>
-                    <a href="{% url 'movie_tv:tv_show' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>TV Shows</a>
+                    <a href="{% url 'movie_tv:browse' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>Home</a>
+                    <a href="#" class='font-semibold hover:text-gray-200 visited:text-white'>TV Shows</a>
                     <a href="{% url 'movie_tv:movies' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>Movies</a>
                     <a href="{% url 'movie_tv:new_popular' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>New & Popular</a>
                     <a href="{% url 'movie_tv:my_list' profile.id %}" class='font-semibold hover:text-gray-200 visited:text-white'>My List</a>
@@ -83,25 +83,44 @@
 <section id="hero" >
     <section class="h-hero-height relative" style="background-image: url({{ featured_movie.cover.url }}); background-repeat: no-repeat; background-size: cover;">
         <div class="h-full bg-[#131213]/50">
-            <div class="px-24 pb-24 w-[40%] h-full flex flex-col justify-end">
-                <h1 class="text-white text-7xl leading-tight font-semibold"> {{ featured_movie.title }} </h1>
-                <p class="text-white text-lg mt-6"> {{ featured_movie.description }} </p>
-                <div class="flex gap-4">
-                    <a href="{% url 'movie_tv:watch' featured_movie.id %}">
-                        <button class="mt-8 flex items-center bg-white rounded py-4 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-                        </svg>
-                        <p>Play</p>                         
+            <div class="px-24 pb-24 w-[50%] h-full flex flex-col justify-between">
+                <div class="mt-8 flex gap-8">
+                    <h2 class="text-white text-4xl leading-tight font-semibold">TV Shows</h2>
+                    <div>
+                        <button @click="handleGenreClick" class="border-2 border-white text-xl font-bold text-white py-1 px-4 flex gap-6 items-center">
+                            Genres
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>                          
                         </button>
-                    </a>
+                        <div class="bg-[#010100] grid grid-cols-3 gap-4 p-2 w-[400px]" v-show="genreFilterVisibility">
+                            <a href="{% url 'movie_tv:tv_show' profile.id %}" class="text-white">All</a>
+                            {% for genre in genres %}
+                                <a href="{% url 'movie_tv:tv_show' profile.id %}?q={{genre}}" class="text-white">{{ genre }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-white text-7xl leading-tight font-semibold"> {{ featured_movie.title }} </h1>
+                    <p class="text-white text-lg mt-6"> {{ featured_movie.description }} </p>
+                    <div class="flex gap-4">
+                        <a href="{% url 'movie_tv:watch' featured_movie.id %}">
+                            <button class="mt-8 flex items-center bg-white rounded py-4 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+                            </svg>
+                            <p>Play</p>                         
+                            </button>
+                        </a>
 
-                    <button class="mt-8 flex items-center bg-[#64635F] rounded py-4 px-6 text-white text-2xl font-semibold gap-2 shadow-lg hover:bg-stone-600" @click="showPopup">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                        </svg>                         
-                        <p>More Info</p>                         
-                    </button>
+                        <button class="mt-8 flex items-center bg-[#64635F] rounded py-4 px-6 text-white text-2xl font-semibold gap-2 shadow-lg hover:bg-stone-600" @click="showPopup">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                            </svg>                         
+                            <p>More Info</p>                         
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -174,8 +193,13 @@
     </section>
 
     <section class="mt-12 mb-16 px-24 relative">
-        <p class="text-white text-3xl font-bold">Movies & TV Shows Picked for You</p>
-        <div class="mt-6 flex flex-wrap gap-4">
+        {% if message %}
+            <p class="text-white text-xl mt-6">{{ message }}</p>
+        {% endif %}
+        {% if query and not message %}
+            <p class="text-white text-3xl font-bold mt-6">{{ query }}</p>
+        {% endif %}
+        <div class="mt-6 flex flex-wrap gap-4">        
             {% for movie in movies %}
                 <div id="individual-movie">
                     <a @mouseenter="handleMouseOver('{{movie.id}}')" href="{% url 'movie_tv:watch' movie.id %}"><img src="{{ movie.cover.url }}" alt="{{ movie.title }} cover" width="350px" class="rounded"></a>
@@ -262,19 +286,21 @@
                                         </a>
                                         {% comment %} Add to List button circle {% endcomment %}
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                            {% comment %} Add to List Button Circle {% endcomment %}
                                             <a href="{% url 'movie_tv:list' profile_pk=profile.id movie_pk=movie.id %}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="{% if movie.on_list %}#E80D11{% else %}#6B7280{% endif %}" class="size-8">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                </svg> 
-                                            </a>                                                                                
+                                                </svg>   
+                                            </a>                                                                              
                                         </div>
-                                        {% comment %} Like button circle {% endcomment %}
+    
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
+                                            {% comment %} Like Button Circle {% endcomment %}
                                             <a href="{% url 'movie_tv:vote' profile_pk=profile.id movie_pk=movie.id %}">
                                                 <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="{% if movie.has_voted %}#E80D11{% else %}#6B7280{% endif %}" viewBox="0 0 24 24">
                                                     <path fill-rule="evenodd" d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z" clip-rule="evenodd"/>
                                                 </svg>                                              
-                                            </a>                                                                                                                                                            
+                                            </a>                                                                                                                     
                                         </div>
                                     </div>
                                 </div>

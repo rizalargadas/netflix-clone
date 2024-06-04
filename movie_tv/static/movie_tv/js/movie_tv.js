@@ -4,9 +4,9 @@ const hero = Vue.createApp({
         return {
             isPopupVisible : false,
             isMiniPopupVisible : {},
-            message: 'you reached me',
             hoverTimeout: null,
-            isMovieDetailVisible: {}
+            isMovieDetailVisible: {},
+            genreFilterVisibility: false
         }
     },
     methods: {
@@ -51,6 +51,9 @@ const hero = Vue.createApp({
         handleMouseOut(movieId) {
             clearTimeout(this.hoverTimeout)
             this.hideMiniPopup(movieId)
+        },
+        handleGenreClick() {
+            this.genreFilterVisibility = !this.genreFilterVisibility
         }
     },
     delimiters: ['[[',']]']
