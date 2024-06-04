@@ -117,6 +117,7 @@
                     <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">
                         <span class="text-white text-3xl font-medium">{{ featured_movie.title }}</span>
                         <div class="flex gap-4 items-center mt-4">
+                            {% comment %} Play button circle {% endcomment %}
                             <a href="{% url 'movie_tv:watch' featured_movie.id %}">
                                 <button class="flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -127,14 +128,16 @@
                             </a>
                             {% comment %} Add to List button circle {% endcomment %}
                             <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                </svg>                                                                                 
+                                <a href="{% url 'movie_tv:list' profile_pk=profile.id movie_pk=featured_movie.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="{% if featured_movie.on_list %}#E80D11{% else %}#6B7280{% endif %}" class="size-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>   
+                                </a>                                                                              
                             </div>
                             {% comment %} Like button circle {% endcomment %}
                             <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
                                     <a href="{% url 'movie_tv:vote' profile_pk=profile.id movie_pk=featured_movie.id %}">
-                                        <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="{% if featured_movie.has_voted %}white{% else %}#6B7280{% endif %}" viewBox="0 0 24 24">
+                                        <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="{% if featured_movie.has_voted %}#E80D11{% else %}#6B7280{% endif %}" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z" clip-rule="evenodd"/>
                                         </svg>   
                                     </a>                                                                                                                                                          
@@ -203,15 +206,17 @@
         
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
                                             {% comment %} Add to List Button Circle {% endcomment %}
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                            </svg>                                                                                 
+                                            <a href="{% url 'movie_tv:list' profile_pk=profile.id movie_pk=movie.id %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="{% if movie.on_list %}#E80D11{% else %}#6B7280{% endif %}" class="size-8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>   
+                                            </a>                                                                              
                                         </div>
     
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
                                             {% comment %} Like Button Circle {% endcomment %}
                                             <a href="{% url 'movie_tv:vote' profile_pk=profile.id movie_pk=movie.id %}">
-                                                <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="{% if movie.has_voted %}white{% else %}#6B7280{% endif %}" viewBox="0 0 24 24">
+                                                <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="{% if movie.has_voted %}#E80D11{% else %}#6B7280{% endif %}" viewBox="0 0 24 24">
                                                     <path fill-rule="evenodd" d="M15.03 9.684h3.965c.322 0 .64.08.925.232.286.153.532.374.717.645a2.109 2.109 0 0 1 .242 1.883l-2.36 7.201c-.288.814-.48 1.355-1.884 1.355-2.072 0-4.276-.677-6.157-1.256-.472-.145-.924-.284-1.348-.404h-.115V9.478a25.485 25.485 0 0 0 4.238-5.514 1.8 1.8 0 0 1 .901-.83 1.74 1.74 0 0 1 1.21-.048c.396.13.736.397.96.757.225.36.32.788.269 1.211l-1.562 4.63ZM4.177 10H7v8a2 2 0 1 1-4 0v-6.823C3 10.527 3.527 10 4.176 10Z" clip-rule="evenodd"/>
                                                 </svg>                                              
                                             </a>                                                                                                                     
@@ -251,7 +256,7 @@
                                 <div class="absolute bottom-10 left-10 z-20 max-w-[65%]">
                                     <span class="text-white text-3xl font-medium">{{ movie.title }}</span>
                                     <div class="flex gap-4 items-center mt-4">
-                                        <a href="{% url 'movie_tv:watch' featured_movie.id %}">
+                                        <a href="{% url 'movie_tv:watch' movie.id %}">
                                             <button class="flex items-center bg-white rounded py-2 px-6 text-2xl shadow-lg font-semibold gap-2 hover:bg-gray-200">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
@@ -261,14 +266,16 @@
                                         </a>
                                         {% comment %} Add to List button circle {% endcomment %}
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                            </svg>                                                                                 
+                                            <a href="{% url 'movie_tv:list' profile_pk=profile.id movie_pk=movie.id %}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="{% if movie.on_list %}#E80D11{% else %}#6B7280{% endif %}" class="size-8">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg> 
+                                            </a>                                                                                
                                         </div>
                                         {% comment %} Like button circle {% endcomment %}
                                         <div class="w-fit rounded-full box-border border-4 border-gray-500 hover:border-gray-200 text-white">
                                             <a href="{% url 'profiles:choose_profile' %}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="{% if movie.has_voted %}#E80D11{% else %}#6B7280{% endif %}" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
                                                 </svg> 
                                             </a>                                                                                                                                                              
@@ -316,7 +323,7 @@
 
 
 
-<script src="{% static 'movie_tv/js/browse.js' %}"></script>
+<script src="{% static 'movie_tv/js/movie_tv.js' %}"></script>
 <script>
     const mountedNavApp = nav.mount('#nav')
 </script>

@@ -13,4 +13,6 @@ urlpatterns = [
          views.browse_by_language, name='browse_by_language'),
     path('<uuid:movie_pk>/watch/', views.watch, name="watch"),
     path('<int:profile_pk>/<uuid:movie_pk>/vote/', views.vote, name="vote"),
+    path('<int:profile_pk>/<uuid:movie_pk>/add_to_list/',
+         views.add_to_list, name="list"),
 ]
