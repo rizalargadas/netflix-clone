@@ -23,7 +23,7 @@ def manage_profiles(request):
 def add_profile(request):
     profiles = Profile.objects.filter(
         account=request.user)
-    if profiles.count() > 5:
+    if profiles.count() >= 5:
         return render(request, 'profiles/choose_profile.html', {
             'form': ProfileForm(),
             'profiles': profiles,

@@ -9,14 +9,14 @@
     {% tailwind_css %}
 </head>
 <body class="bg-[#141414]">
-    <form method="POST" class="w-[40%] h-screen flex flex-col justify-center mx-auto">
+    <form method="POST" class="w-[90%] md:w-[40%] h-screen flex flex-col justify-center mx-auto">
         {% csrf_token %}
-        <h1 class="text-7xl text-white font-bold">Edit Profile</h1>     
+        <h1 class="text-5xl md:text-7xl text-white">Edit Profile</h1>     
         {% if error %}
         <p class="mt-6 mb-4 text-xl text-red-500"> ⚠️ {{ error }} ⚠️</p>
         {% endif %}   
         <hr class="border border-[#818081] my-8">
-        <div class="flex justify-between gap-10">
+        <div class="flex flex-col md:flex-row justify-between gap-10">
             <div>
                 <img src="{{ profile.avatar.image.url }}" alt="{{ profile.name }} profile avatar" class="rounded-xl w-[220px]">
             </div>
@@ -26,7 +26,7 @@
                 
                 <div>
                     <p class="mt-6 mb-4 text-xl font-medium text-white">Enter/Edit Pin (optional)</p>
-                    <div class="flex gap-2">
+                    <div class="flex flex-col md:flex-row gap-2">
                         {{ form.enter_pin }}
                         {{ form.confirm_pin }}
                     </div>

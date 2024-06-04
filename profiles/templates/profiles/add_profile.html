@@ -10,13 +10,13 @@
     {% tailwind_css %}
 </head>
 <body class="bg-black">
-    <form method="POST" class="w-[40%] h-screen flex flex-col justify-center mx-auto">
+    <form method="POST" class="w-[90%] md:w-[40%] h-screen flex flex-col justify-center mx-auto">
         {% csrf_token %}
-        <h1 class="text-7xl text-white">Add Profile</h1>
+        <h1 class="text-5xl md:text-7xl text-white">Add Profile</h1>
         <p class="text-2xl my-8 text-[#818081]">Add a profile for another person watching Netflix.</p>
         
         <hr class="border border-[#818081] mb-8">
-        <div class="flex justify-between items-center gap-6">
+        <div class="flex flex-col md:flex-row md:justify-between items-center gap-6">
             <img src="{% static 'profiles/images/default_profile.png'%}" alt="default profile image" class="rounded-xl w-[220px]">
             {{ form.name }}
             <div class="flex items-center gap-4">

@@ -14,7 +14,7 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={
                 'placeholder': 'Name',
-                'class': 'w-full h-fit px-3 py-3 bg-[#666666] placeholder-white text-white text-xl'
+                'class': 'w-[90%] md:w-full h-fit px-3 py-3 bg-[#666666] placeholder-white text-white text-xl'
             }),
             'is_kid': forms.CheckboxInput(attrs={
                 'class': 'border-[#818081] py-4 px-4 bg-transparent'

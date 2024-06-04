@@ -11,13 +11,13 @@
 <body class="bg-[#151415]">
     <div class="h-screen flex flex-col justify-center w-fit mx-auto text-center">
         <p class="text-2xl font-semibold text-[#818081]">Profile Lock is currently on.</p>
-        <h1 class="mt-8 text-5xl font-bold text-white">Enter your PIN to access this profile.</h1>
+        <h1 class="mt-8 text-3xl md:text-5xl font-bold text-white">Enter your PIN to access this profile.</h1>
 
-        <div class="mt-16">
+        <div class="mt-10 md:mt-16">
             <form action="." method="POST">
                 {% csrf_token %}
                 <input type="password" name="pin" maxlength="4" placeholder="Enter pin" class="w-fit h-fit px-3 py-3 bg-[#666666] placeholder-white text-center text-white text-xl">
-                <button type="submit" class="block mt-8 mx-auto py-2 px-8 bg-white w-fit text-black font-semibold text-lg hover:bg-red-600 hover:text-white">Enter</button>
+                <button type="submit" class="block mt-4 md:mt-8 mx-auto py-2 px-8 bg-white w-fit text-black font-semibold text-lg hover:bg-red-600 hover:text-white">Enter</button>
             </form>
         </div>
 
